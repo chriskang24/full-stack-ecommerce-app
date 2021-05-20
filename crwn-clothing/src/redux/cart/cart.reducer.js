@@ -1,4 +1,5 @@
 import CartActionTypes from './cart.types';
+import { addItemToCart } from './cart.utils';
 
 const INITIAL_STATE = {
   hidden: true,
@@ -6,7 +7,7 @@ const INITIAL_STATE = {
 }
 
 const cartReducer = (state = INITIAL_STATE, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case CartActionTypes.TOGGLE_CART_HIDDEN:
       return {
         ...state,
@@ -17,9 +18,9 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       // L20: spread in all existing array values + additional values at end on click
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload]
+        cartItems: addItemToCart(state.cartItems, action.payload)
       }
-  
+
     default:
       return state;
   }
