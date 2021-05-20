@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import HomePage from './pages/homepage/homepage.component';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './components/sign-in-and-sign-up/sign-in-and-sign-up.component';
@@ -24,7 +24,7 @@ class App extends React.Component {
           setCurrentUser({
             currentUser: {
               id: snapShot.id,
-              ...snapShot.data()
+              ...snapShot.data() 
             }
           })
           // console.log(this.state)
@@ -47,16 +47,21 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
-          <Route path='/signin' component={SignInAndSignUpPage} />
+          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<SignInAndSignUpPage/>)} />
         </Switch>
       </div>
     );
   }
 }
 
+// Pass to connect to have access to this.props.currentUser
+const mapStateToProps = ({user}) => ({
+  currentUser: user.currentUser
+})
+
 // pass the action object, invoke setCurrentUser with the user that will then be used as the payload
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
