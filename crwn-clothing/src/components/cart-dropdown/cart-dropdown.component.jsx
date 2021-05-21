@@ -9,7 +9,6 @@ import { withRouter } from 'react-router-dom';
 import CustomBotton from '../custom-button/custom-botton.component';
 import CartItem from '../cart-item/cart-item.component';
 
-
 const CartDropdown = ({ cartItems, history }) => (
   <div className="cart-dropdown">
     <div className="cart-items">
